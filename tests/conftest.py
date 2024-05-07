@@ -18,21 +18,18 @@ def mobile_version():
     browser.quit()
 
 @pytest.fixture(params=['desktop', 'mobile'])
-def setup_browser(request):
+def driver(request):
     if request.param == 'desktop':
         browser.config.window_width = 1920
         browser.config.window_height = 1080
-    elif request.param == 'mobile':
-        browser.config.window_width = 412
-        browser.config.window_height = 915
+    else:
+        browser.config.window_width = 400
+        browser.config.window_height = 700
 
     yield
     browser.quit()
 
-@pytest.fixture(params=[(1920, 1080), (412, 915)])
-def desktop_browser(request):
+@pytest.fixture(params=[(1920, 1080), (400, 700)])
+def driver_setup(request):
     browser.config.window_width = request.param[0]
     browser.config.window_height = request.param[1]
-
-    yield
-    browser.quit()
